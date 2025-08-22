@@ -3,8 +3,17 @@ cols = 3
 
 let container = document.getElementById("container")
 
+let table, tr, td
+
+let btn = document.getElementById("btn")
+
+btn.addEventListener("click", () => {
+
+createTable(rows, cols)
+numberClick(rows, cols)
+    })
+
 function createTable(r, c) {
-    let table, tr, td
     let arr = randomNumbers(r, c)
     let index = 0
     table = document.createElement("table")
@@ -38,5 +47,25 @@ function randomNumbers(r, c) {
 
 }
 
+function numberClick(r, c) {
+    let tds = document.querySelectorAll("td")
+    let count = 1
+    tds.forEach(td => {
+        td.addEventListener("click", () => {
+            if (td.className != "clicked") {
+                if (td.innerHTML == count) {
+                    td.style.backgroundColor = "green"
+                    td.classList.add("clicked")
+                    count++
+                }
+                else {
+                    td.style.backgroundColor = "red"
+                    setTimeout(() => {
+                        td.style.backgroundColor = "white"
 
-createTable(rows, cols)
+                    }, 1000);
+                }
+            }
+        })
+    });
+}
