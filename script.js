@@ -1,15 +1,19 @@
 let rows = 2
-let cols = 3
+let cols = 2
 
 let container = document.getElementById("container")
 let btn = document.getElementById("btn")
-let p = document.getElementById("timer")
+let pTimer = document.getElementById("timer")
+let pBest = document.getElementById("best")
 let table, tr, td, win
 let min = 0
 let s = 0
 let ms = 0
 
 let time
+
+let bestScore = 0
+let curScore;
 
 btn.addEventListener("click", () => {
     btn.innerHTML = "REFRESH"
@@ -18,17 +22,33 @@ btn.addEventListener("click", () => {
     s = 0
     ms = 0
     timer()
-    
+
     createTable(rows, cols)
     numberClick(rows, cols)
 })
 
+function timeToMs(timeStr) {
+    let [min, time] = timeStr.split(":")
+
+    let [sec, ms] = time.split(".")
+    console.log(min, sec);
+    let toMs = parseInt(min) * 60000 + parseInt(sec) * 1000 + parseInt(ms)
+    return toMs
+}
+
 function timer() {
-    
+
     time = setInterval(() => {
         if (win == true) {
-        clearInterval(time)
-    }
+            clearInterval(time)
+            curScore = timeToMs(pTimer.innerHTML.replace("Time:", " "))
+
+            if (bestScore == 0 || bestScore > curScore) {
+                bestScore = curScore
+                pBest.innerHTML = `Best: ${min}:${s.toString().padStart(2, "0")}.${ms.toString().padStart(3, "0")}`
+            }
+
+        }
 
         if (ms >= 100) {
             ms = 0
@@ -39,7 +59,7 @@ function timer() {
             s = 0
             min++
         }
-        p.innerHTML = `Time: ${min}:${s.toString().padStart(2, "0")}.${ms.toString().padStart(2, "0")}`
+        pTimer.innerHTML = `Time: ${min}:${s.toString().padStart(2, "0")}.${ms.toString().padStart(3, "0")}`
 
         ms++
         // timer()
@@ -50,7 +70,7 @@ function timer() {
 function createTable(r, c) {
     let arr = randomNumbers(r, c)
     let index = 0
-    table = container.getElementsByTagName("table") 
+    table = container.getElementsByTagName("table")
     if (table.length > 0) {
         table[0].remove()
     }
@@ -109,5 +129,5 @@ function numberClick(r, c) {
             }
         })
     });
-    
+
 }
