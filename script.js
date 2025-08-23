@@ -1,5 +1,5 @@
-let rows = 2
-let cols = 2
+let rows = 5
+let cols = 5
 
 let container = document.getElementById("container")
 let btn = document.getElementById("btn")
@@ -18,7 +18,7 @@ let bestScore = 0
 let curScore;
 
 btn.addEventListener("click", () => {
-gameStart()
+    gameStart()
 })
 
 function gameStart() {
@@ -68,7 +68,6 @@ function timer() {
         pTimer.innerHTML = `Time: ${min}:${s.toString().padStart(2, "0")}.${ms.toString().padStart(3, "0")}`
 
         ms++
-        // timer()
     }, 10);
 }
 
@@ -86,9 +85,6 @@ function createOrChangeTable(r, c) {
         tr = document.createElement("tr")
         for (let j = 0; j < c; j++) {
             td = document.createElement("td")
-            td.style.border = "1px solid black"
-            td.style.width = "50px"
-            td.style.height = "50px"
             td.innerHTML = arr[index]
             index++
             td.style.textAlign = "center"
@@ -118,12 +114,16 @@ function numberClick(r, c) {
         td.addEventListener("click", () => {
             if (td.className != "clicked") {
                 if (td.innerHTML == count) {
-                    td.style.backgroundColor = "green"
+                    td.style.backgroundColor = "rgb(1, 1, 65)"
+                    td.style.transform = "scale(1.1)"
+                    td.style.border = "0.1px solid rgb(217, 249, 238)"
                     td.classList.add("clicked")
                     count++
                     if (count > r * c) {
                         win = true
                         txt.innerHTML = "YOU WIN!"
+                        txt.style.fontSize = "27px"
+                        txt.style.color = "green"
                         setTimeout(() => {
                             txt.innerHTML = ""
                             gameStart()
@@ -132,12 +132,13 @@ function numberClick(r, c) {
                 }
                 else {
                     td.style.backgroundColor = "red"
-                        txt.innerHTML = "WRONG!"
-
+                    txt.innerHTML = "WRONG!"
+                    txt.style.fontSize = "25px"
+                    txt.style.color = "red"
                     setTimeout(() => {
-                            txt.innerHTML = ""
+                        txt.innerHTML = ""
 
-                        td.style.backgroundColor = "white"
+                        td.style.backgroundColor = "rgb(52, 135, 255)"
 
                     }, 1000);
                 }
