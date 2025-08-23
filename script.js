@@ -5,6 +5,8 @@ let container = document.getElementById("container")
 let btn = document.getElementById("btn")
 let pTimer = document.getElementById("timer")
 let pBest = document.getElementById("best")
+let txt = document.getElementById("txt")
+
 let table, tr, td, win
 let min = 0
 let s = 0
@@ -16,6 +18,10 @@ let bestScore = 0
 let curScore;
 
 btn.addEventListener("click", () => {
+gameStart()
+})
+
+function gameStart() {
     btn.innerHTML = "REFRESH"
     win = false
     min = 0
@@ -23,9 +29,9 @@ btn.addEventListener("click", () => {
     ms = 0
     timer()
 
-    createTable(rows, cols)
+    createOrChangeTable(rows, cols)
     numberClick(rows, cols)
-})
+}
 
 function timeToMs(timeStr) {
     let [min, time] = timeStr.split(":")
@@ -67,7 +73,7 @@ function timer() {
 }
 
 
-function createTable(r, c) {
+function createOrChangeTable(r, c) {
     let arr = randomNumbers(r, c)
     let index = 0
     table = container.getElementsByTagName("table")
@@ -117,11 +123,20 @@ function numberClick(r, c) {
                     count++
                     if (count > r * c) {
                         win = true
+                        txt.innerHTML = "YOU WIN!"
+                        setTimeout(() => {
+                            txt.innerHTML = ""
+                            gameStart()
+                        }, 1000);
                     }
                 }
                 else {
                     td.style.backgroundColor = "red"
+                        txt.innerHTML = "WRONG!"
+
                     setTimeout(() => {
+                            txt.innerHTML = ""
+
                         td.style.backgroundColor = "white"
 
                     }, 1000);
