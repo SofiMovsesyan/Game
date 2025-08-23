@@ -1,27 +1,35 @@
-let rows = 5
+let rows = 2
 let cols = 3
-let win = false
-
-let min = 0
-let s = 0
-let ms = 0
 
 let container = document.getElementById("container")
 let btn = document.getElementById("btn")
 let p = document.getElementById("timer")
-let table, tr, td
+let table, tr, td, win
+let min = 0
+let s = 0
+let ms = 0
 
 let time
 
 btn.addEventListener("click", () => {
     btn.innerHTML = "REFRESH"
+    win = false
+    min = 0
+    s = 0
+    ms = 0
     timer()
+    
     createTable(rows, cols)
     numberClick(rows, cols)
 })
 
 function timer() {
+    
     time = setInterval(() => {
+        if (win == true) {
+        clearInterval(time)
+    }
+
         if (ms >= 100) {
             ms = 0
             s++
@@ -87,7 +95,7 @@ function numberClick(r, c) {
                     td.style.backgroundColor = "green"
                     td.classList.add("clicked")
                     count++
-                    if (count == r * c) {
+                    if (count > r * c) {
                         win = true
                     }
                 }
@@ -101,4 +109,5 @@ function numberClick(r, c) {
             }
         })
     });
+    
 }
